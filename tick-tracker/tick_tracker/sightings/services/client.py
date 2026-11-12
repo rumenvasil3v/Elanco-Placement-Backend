@@ -100,3 +100,10 @@ class TickAPIClient:
     def _parse_retry_after(response):
         value = response.headers.get("Retry-After", "")
         return int(value) if value.isdigit() else DEFAULT_RATE_LIMIT_WAIT
+
+    def ping(self, timeout=5):
+        try:
+            response = self.session.get(f"{self.base_url}/health", timeout=timeout)
+            return response.status_code == 200
+        except requests.RequestException:
+            return False

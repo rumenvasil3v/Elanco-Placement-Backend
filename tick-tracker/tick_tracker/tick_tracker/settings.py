@@ -15,7 +15,7 @@ import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+TICK_API_MAX_RETRIES = int(os.environ.get("TICK_API_MAX_RETRIES", "5"))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.1/howto/deployment/checklist/
@@ -129,4 +129,39 @@ MAILERS = {
     'default': {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
     },
+}
+
+# TODO: Simulate external API being down for the demo
+# TICK_API_BASE_URL=http://localhost:9999 TICK_API_MAX_RETRIES=2
+TICK_API_BASE_URL = os.environ.get("TICK_API_BASE_URL", "https://dev-task.elancoapps.com/data")
+TICK_API_TIMEOUT = int(os.environ.get("TICK_API_TIMEOUT", "30"))
+TICK_API_MAX_RETRIES = int(os.environ.get("TICK_API_MAX_RETRIES", "5"))
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "simple": {"format": "{asctime} [{levelname}] {name}: {message}", "style": "{"},
+    },
+    "handlers": {
+        "console": {"class": "logging.StreamHandler", "formatter": "simple"},
+    },
+    "loggers": {
+        "sightings": {"handlers": ["console"], "level": "INFO"},
+    },
+}
+
+REST_FRAMEWORK = {
+    "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
+    "DEFAULT_PAGINATION_CLASS": "sightings.pagination.StandardPagination",
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "EXCEPTION_HANDLER": "sightings.exceptions.api_exception_handler",
+}
+
+DATA_STALE_AFTER_HOURS = int(os.environ.get("DATA_STALE_AFTER_HOURS", "24"))
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "UK Tick Sightings API",
+    "DESCRIPTION": "Search, filter and aggregate UK tick sighting data.",
+    "VERSION": "1.0.0",
 }
