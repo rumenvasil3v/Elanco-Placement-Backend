@@ -108,7 +108,7 @@ sightings/                     # Main app
 
 ```bash
 git clone https://github.com/rumenvasil3v/Elanco-Placement-Backend/
-cd tick
+cd ./tick-tracker/tick-tracker/
 
 python -m venv venv
 source venv/bin/activate            # Windows: venv\Scripts\activate
