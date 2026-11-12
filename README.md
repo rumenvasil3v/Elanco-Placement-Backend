@@ -4,7 +4,7 @@ A backend service for a UK tick-sighting tracker, built as the Elanco Placement 
 
 It consumes raw crowdsourced tick-sighting data from the Elanco source API, cleans and validates it, stores it in a relational database, and exposes a REST API for searching, filtering and aggregate reporting (sightings per region and trends over time).
 
-**Author:** <!-- TODO: your full name -->
+**Author:** Rumen Vasilev
 
 ---
 
@@ -107,8 +107,8 @@ sightings/                     # Main app
 ### Setup
 
 ```bash
-git clone <!-- TODO: your repo URL -->
-cd <!-- TODO: path to the folder containing manage.py -->
+git clone https://github.com/rumenvasil3v/Elanco-Placement-Backend/
+cd tick
 
 python -m venv venv
 source venv/bin/activate            # Windows: venv\Scripts\activate
