@@ -48,6 +48,7 @@ class RejectedRecord(models.Model):
     reason = models.TextField()
     rejected_at = models.DateTimeField(auto_now_add=True)
 
+
 class SyncLog(models.Model):
     STATUS_CHOICES = [("success", "Success"), ("partial", "Partial"), ("failed", "Failed")]
 
