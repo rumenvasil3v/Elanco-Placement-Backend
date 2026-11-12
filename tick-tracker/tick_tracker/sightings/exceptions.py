@@ -1,6 +1,8 @@
 import logging
 
-from rest_framework import status
+from django.core.exceptions import PermissionDenied
+from django.http import Http404
+from rest_framework import exceptions, status
 from rest_framework.response import Response
 from rest_framework.views import exception_handler
 
@@ -8,6 +10,11 @@ logger = logging.getLogger(__name__)
 
 
 def api_exception_handler(exc, context):
+    if isinstance(exc, Http404):
+        exc = exceptions.NotFound(*exc.args)
+    elif isinstance(exc, PermissionDenied):
+        exc = exceptions.PermissionDenied(*exc.args)
+
     response = exception_handler(exc, context)  # DRF's default handling first
 
     if response is None:
